@@ -1,0 +1,24 @@
+<odoo>
+  <data>
+      <!-- Heredar la vista existente -->
+      <record id="view_fleet_vehicle_form_inherit" model="ir.ui.view">
+          <field name="name">fleet.vehicle.form.inherit</field>
+          <field name="model">fleet.vehicle</field>
+          <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>  <!-- Hereda la vista correcta -->
+          <field name="arch" type="xml">
+              <!-- Localizar el grupo "Vehicle" -->
+              <group string="Vehicle" position="after">
+                  <!-- Agregar el nuevo grupo justo debajo del grupo "Vehicle" -->
+                  <group string="Mantenimiento">
+                      <field name="last_service"/>
+                      <field name="last_service_date"/>
+                      <field name="next_service"/>
+                      <field name="next_service_limit"/>
+                      <!-- Añade los campos adicionales que necesites -->
+                  </group>
+              </group>
+          </field>
+      </record>
+    
+  </data>
+</odoo>
