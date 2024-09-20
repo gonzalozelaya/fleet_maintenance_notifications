@@ -1,22 +1,113 @@
 <odoo>
   <data>
-      <!-- Heredar la vista existente -->
+      <!--
       <record id="view_fleet_vehicle_form_inherit" model="ir.ui.view">
           <field name="name">fleet.vehicle.form.inherit</field>
           <field name="model">fleet.vehicle</field>
-          <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>  <!-- Hereda la vista correcta -->
+          <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>  
           <field name="arch" type="xml">
-              <!-- Localizar el grupo "Vehicle" -->
-              <group string="Vehicle" position="after">
-                  <!-- Agregar el nuevo grupo justo debajo del grupo "Vehicle" -->
-                  <group string="Mantenimiento">
-                      <field name="last_service"/>
-                      <field name="last_service_date"/>
-                      <field name="next_service"/>
-                      <field name="next_service_limit"/>
-                      <!-- Añade los campos adicionales que necesites -->
-                  </group>
-              </group>
+              <xpath expr="//notebook" position="before">
+                  <group col="2">
+                      <group string="Mantenimiento">
+                          <field name="last_service"/>
+                          <field name="last_service_date"/>
+                          <field name="next_service"/>
+                          <field name="next_service_limit"/>
+                      </group>
+                    </group>
+              </xpath>
+          </field>
+      </record>- Heredar la vista existente -->
+      <record id="view_fleet_maintenance_notifications_tree" model="ir.ui.view">
+        <field name="name">fleet.maintenance.notifications.tree</field>
+        <field name="model">fleet.maintenance_notifications</field>
+        <field name="arch" type="xml">
+            <tree string="Mantenimiento de Vehículos">
+                <field name="vehicle_id"/>
+                <field name="service_type_id"/>
+                <field name="last_service"/>
+                <field name="last_service_date"/>
+                <field name="next_service"/>
+                <field name="next_service_limit"/>
+
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_fleet_maintenance_notifications_form" model="ir.ui.view">
+        <field name="name">fleet.maintenance.notifications.form</field>
+        <field name="model">fleet.maintenance_notifications</field>
+        <field name="arch" type="xml">
+            <form string="Notificación de Mantenimiento">
+                <sheet>
+                    <group col="2">
+                        <group>
+                            <field name="vehicle_id"/>
+                            <field name="service_type_id"/>
+                            
+                            <field name="next_service"/>
+                            
+                            <field name="frequence"/>
+                        </group>
+                        <group>
+                            <field name="last_service"/>
+                            <field name="last_service_date"/>
+                            <field name="next_service_limit"/>
+                        </group>
+                    </group>
+                    <group string="Servicios" col="2">
+                        <group>
+                            <field name="create_services"/>
+                        </group>
+                        <group>
+                            <field name="desc_default"/>
+                            <field name="proveedor_default"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_fleet_vehicle_form_inherit" model="ir.ui.view">
+          <field name="name">fleet.vehicle.form.inherit</field>
+          <field name="model">fleet.vehicle</field>
+          <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>  
+          <field name="arch" type="xml">
+              <xpath expr="//notebook" position="inside">
+                  <page string="Alertas">
+                      <field name="maintenance_ids" >
+                          <tree>
+                                <field name="service_type_id"/>
+                                <field name="last_service_date"/>
+                                <field name="last_service"/>
+                                <field name="next_service"/>
+                                <field name="next_service_limit"/>
+                          </tree>
+                          <form>
+                            <group col="2">
+                                <group>
+                                    <field name="vehicle_id" invisible="1"/>
+                                    <field name="service_type_id"/>
+                                    <field name="next_service"/>
+                                    <field name="frequence"/>
+                                </group>
+                                <group>
+                                    <field name="next_service_limit"/>
+                                </group>
+                            </group>
+                            <group string="Servicios" col="2">
+                                <group>
+                                    <field name="create_services"/>
+                                    <field name="desc_default" attrs="{'invisible': [('create_services', '=', False)]}"/>
+                                    <field name="proveedor_default" attrs="{'invisible': [('create_services', '=', False)]}"/>
+                                </group>
+
+                            </group>
+                        </form>
+                      </field>
+                    </page>
+              </xpath>
           </field>
       </record>
     

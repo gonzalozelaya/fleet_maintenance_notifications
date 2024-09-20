@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_my_module_my_module,my_module.my_module,model_my_module_my_module,,1,0,0,0
+access_fleet_maintenance_notifications_user,fleet.maintenance.notifications user,model_fleet_maintenance_notifications,base.group_user,1,1,1,1
+access_fleet_maintenance_notifications_manager,fleet.maintenance.notifications manager,model_fleet_maintenance_notifications,base.group_system,1,1,1,1
