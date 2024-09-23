@@ -74,7 +74,8 @@ class FleetVehicle(models.Model):
                 task.last_service = odometer_value
                 task.last_service_date = date
                 if task.frequence != 0:
-                    task.next_service = task.next_service + task.frequence    
+                    #task.next_service = task.next_service + task.frequence  
+                    task.next_service = record.next_frequence(task.next_service,task.frequence,odometer_value)
                 else:
                     task.next_service = 0
                 if task.create_services:
@@ -85,7 +86,13 @@ class FleetVehicle(models.Model):
                     message_type='notification',
                     subtype_xmlid='mail.mt_comment'
                 )
-
+            
+    def next_frequence(self,limit,freq,odometer):
+        if limit+freq <= odometer:
+            return self.next_frequence(limit+freq,freq,odometer)
+        else:
+            return limit+freq
+            
     def create_service_log(self, date, task, odometer):
         # Crear un nuevo registro en fleet.vehicle.log.services
         self.env['fleet.vehicle.log.services'].create({
